@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Location</title>
+</head>
+<script>
+    function initMap(){//地圖api先載入成功
+        //顯示地圖
+        let map=new google.maps.Map(document.querySelector("#map"),{
+            center:{lat:21,lng:121},
+            zoom:8
+        });
+        //取得地理位置
+        navigator.geolocation.getCurrentPosition(function(result){//可抓地理位置 失敗機率高
+            console.log("Result", result);
+            let latlng={
+                lat:result.coords.latitude,
+                lng:result.coords.longitude
+            };
+            let marker=new google.maps.Marker({
+                position:latlng,
+                map:map,
+            });
+            map.setCenter(latlng);
+        },function(error){
+            console.log("Error",error);//使用者拒絕也算錯誤
+        });
+    }
+    
+    
+    
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+    async defer>
+</script>
+<body>
+    <h3>Location</h3>
+    <div id="map" style="width: 800px;height: 600px;"></div>
+</body>
+</html>
